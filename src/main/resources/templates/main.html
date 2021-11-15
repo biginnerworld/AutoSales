@@ -16,6 +16,19 @@
             <p th:utext="${announcement.getModel()}">content</p>
             <p th:utext="${announcement.getDescription()}"></p>
         </div>
+        <div>
+            <p>
+                <span th:if="${pageNumber > 1}">
+                    <a th:href="@{/(page=${(pageNumber -1)})}"><<</a>
+                </span>
+                <span th:utext="${pageNumber}"></span>
+                <span> from </span>
+                <span th:utext="${numOfPages}"></span>
+                <span th:if="${pageNumber < numOfPages}">
+                    <a th:href="@{/(page=${(pageNumber +1)})}">>></a>
+                </span>
+            </p>
+        </div>
     </div>
 </div>
 

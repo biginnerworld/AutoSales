@@ -6,6 +6,9 @@ import com.karpovskiy.autosales.model.User;
 import com.karpovskiy.autosales.repository.SaleAnnouncementRepository;
 import com.karpovskiy.autosales.service.SaleAnnouncementService;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -51,5 +54,21 @@ public class SaleAnnouncementServiceImpl implements SaleAnnouncementService {
     @Override
     public void deleteSaleAnnouncement(String id) {
         saleAnnouncementRepository.deleteSaleAnnouncementById(id);
+    }
+
+    @Override
+    public Page<SaleAnnouncement> getSaleAnnouncements(int pageNumber) {
+
+        return saleAnnouncementRepository.findAll(
+                PageRequest.of(pageNumber, 10, Sort.by(Sort.Direction.DESC, "publishDate"))
+        );
+
+
+    }
+
+    @Override
+    public Integer getNumberOfPages(){
+        Double numOfPages = ((double)saleAnnouncementRepository.findAll().size() / 10);
+        return (int)Math.ceil(numOfPages);
     }
 }

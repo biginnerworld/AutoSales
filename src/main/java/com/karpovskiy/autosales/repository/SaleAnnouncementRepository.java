@@ -8,5 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Repository
 @Transactional
 public interface SaleAnnouncementRepository extends JpaRepository<SaleAnnouncement, String> {
+
     void deleteSaleAnnouncementById(String id);
+
 }

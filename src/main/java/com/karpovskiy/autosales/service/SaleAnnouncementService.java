@@ -2,6 +2,7 @@ package com.karpovskiy.autosales.service;
 
 import com.karpovskiy.autosales.model.SaleAnnouncement;
 import com.karpovskiy.autosales.model.User;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
@@ -20,5 +21,9 @@ public interface SaleAnnouncementService {
     void patchSaleAnnouncement(SaleAnnouncement saleAnnouncement, String id);
 
     void deleteSaleAnnouncement(String id);
+
+    Page<SaleAnnouncement> getSaleAnnouncements(int pageNumber);
+
+    Integer getNumberOfPages();
 
 }
