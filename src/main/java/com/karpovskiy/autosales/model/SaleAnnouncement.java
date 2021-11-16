@@ -1,10 +1,12 @@
 package com.karpovskiy.autosales.model;
 
-import lombok.Data;
+import lombok.*;
+import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.Objects;
 
 /**
  * This Entity represents Car Sale Announcement
@@ -12,7 +14,10 @@ import java.util.Date;
  *  */
 
 @Entity
-@Data
+@Getter
+@Setter
+@ToString
+@RequiredArgsConstructor
 @Table(name = "CarSaleAnnouncements")
 public class SaleAnnouncement {
 
@@ -24,11 +29,8 @@ public class SaleAnnouncement {
     @Temporal(TemporalType.TIMESTAMP)
     private Date publishDate;
 
-    @Column(name = "brand")
-    private String brand;
-
-    @Column(name = "model")
-    private String model;
+    @Column(name = "title")
+    private String title;
 
     @Column(name = "description")
     private String description;
@@ -36,7 +38,23 @@ public class SaleAnnouncement {
     @Column(name = "price")
     private BigDecimal price;
 
+    @Column(name = "deleted")
+    private boolean deleted;
+
     @ManyToOne
     @JoinColumn(name = "author_id", referencedColumnName = "user_id")
     private User author;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        SaleAnnouncement that = (SaleAnnouncement) o;
+        return id != null && Objects.equals(id, that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return 0;
+    }
 }

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>AutoSales</title>
+</head>
+<body style="margin: 0px; background-color: burlywood">
+<header style="padding: 15px; background-color: aquamarine">
+  <span style="font-size: 30px; margin-left: 15%"><a style="color: black; text-decoration: none" th:href="@{/}">AutoSales</a></span>
+  <span style="margin-right: 20px; margin-left: 20px; font-size: 28px">||</span>
+  <span style="font-size: 24px">Creating Page</span>
+</header>
+<div style="width: 80%; background-color: bisque; margin: 0 auto;">
+  <div style="width: 95%; margin: 15px auto;">
+    <form th:action="@{/announcements/newAnnouncement}" th:object="${announcement}" th:method="POST">
+
+      <div>
+        <p>Create title</p>
+        <span><input type="text" th:field="${announcement.title}"></span>
+      </div>
+
+      <div>
+        <p>Description:</p>
+        <span><input type="text" th:field="${announcement.description}"></span>
+      </div>
+
+      <div>
+        <p>Price(in US dollars):</p>
+        <span><input type="text" th:field="${announcement.price}"></span>
+      </div>
+      <br/>
+      <input type="submit" value="Create!">
+    </form>
+  </div>
+</div>
+
+</body>
+</html>

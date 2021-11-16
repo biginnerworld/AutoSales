@@ -33,6 +33,7 @@ public class SaleAnnouncementServiceImpl implements SaleAnnouncementService {
 
     @Override
     public void createSaleAnnouncement(SaleAnnouncement saleAnnouncement, User author) {
+        saleAnnouncement.setDeleted(false);
         saleAnnouncement.setAuthor(author);
         saleAnnouncement.setId(IDGenerator.generateID());
         saleAnnouncement.setPublishDate(new Date());
@@ -43,8 +44,7 @@ public class SaleAnnouncementServiceImpl implements SaleAnnouncementService {
     public void patchSaleAnnouncement(SaleAnnouncement editedSaleAnnouncement, String id) {
         SaleAnnouncement saleAnnouncement = getSaleAnnouncementById(id);
 
-        saleAnnouncement.setBrand(editedSaleAnnouncement.getBrand());
-        saleAnnouncement.setModel(editedSaleAnnouncement.getModel());
+        saleAnnouncement.setTitle(editedSaleAnnouncement.getTitle());
         saleAnnouncement.setDescription(editedSaleAnnouncement.getDescription());
         saleAnnouncement.setPrice(editedSaleAnnouncement.getPrice());
 
@@ -53,16 +53,19 @@ public class SaleAnnouncementServiceImpl implements SaleAnnouncementService {
 
     @Override
     public void deleteSaleAnnouncement(String id) {
-        saleAnnouncementRepository.deleteSaleAnnouncementById(id);
+        SaleAnnouncement saleAnnouncement = getSaleAnnouncementById(id);
+
+        saleAnnouncement.setDeleted(true);
+
+        saleAnnouncementRepository.save(saleAnnouncement);
     }
 
     @Override
     public Page<SaleAnnouncement> getSaleAnnouncements(int pageNumber) {
 
-        return saleAnnouncementRepository.findAll(
+       return saleAnnouncementRepository.findAllByDeletedIsFalse(
                 PageRequest.of(pageNumber, 10, Sort.by(Sort.Direction.DESC, "publishDate"))
         );
-
 
     }
 

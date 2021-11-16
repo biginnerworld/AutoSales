@@ -7,16 +7,27 @@
 <body style="margin: 0px; background-color: burlywood">
 <header style="padding: 15px; background-color: aquamarine">
     <span style="font-size: 30px; margin-left: 15%"><a style="color: black; text-decoration: none" th:href="@{/}">AutoSales</a></span>
+    <span style="float: right; margin-top: 7px">
+        <span><a th:href="@{/announcements/newAnnouncement}">New Sale Announcement</a></span>
+    </span>
 </header>
 
 <div style="width: 80%; background-color: bisque; margin: 0 auto;">
     <div style="width: 95%; margin: 15px auto;">
         <div th:each="announcement : ${announcements}">
-            <h4 th:utext="${announcement.getBrand()}">heading</h4>
-            <p th:utext="${announcement.getModel()}">content</p>
-            <p th:utext="${announcement.getDescription()}"></p>
+            <a th:href="@{/announcements/{id}(id=${announcement.getId()})}"><div style="border-width: 2px; border-color: black; color: black">
+                <h4 th:utext="${announcement.getTitle()}">title</h4>
+                <p>
+                    <span th:utext="${announcement.getPrice()}">price</span><span>$</span>
+                </p>
+                <p>
+                    <span>Description: </span>
+                    <span th:utext="${announcement.getDescription()}"></span>
+                </p>
+                <p th:utext="${announcement.getAuthor().getUsername()}">author</p>
+            </div></a>
         </div>
-        <div>
+        <div th:if="${numOfPages > 1}">
             <p>
                 <span th:if="${pageNumber > 1}">
                     <a th:href="@{/(page=${(pageNumber -1)})}"><<</a>

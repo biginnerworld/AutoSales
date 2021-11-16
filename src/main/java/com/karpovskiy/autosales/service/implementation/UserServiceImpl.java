@@ -25,12 +25,17 @@ public class UserServiceImpl implements UserService {
     public void createUser(User user) {
         user.setId(IDGenerator.generateID());
         user.setRole(Role.USER);
+        user.setDeleted(false);
         userRepository.save(user);
     }
 
     @Override
     public User getUserById(String id) {
         return userRepository.getById(id);
+    }
+
+    public User getUserByUsername(String username){
+        return userRepository.findUserByUsername(username);
     }
 
     @Override
@@ -45,6 +50,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void deleteUser(String id) {
-        userRepository.deleteUserById(id);
+        userRepository.getById(id).setDeleted(true);
     }
 }
