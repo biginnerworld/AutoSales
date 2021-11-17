@@ -22,7 +22,7 @@ public interface SaleAnnouncementService {
 
     void deleteSaleAnnouncement(String id);
 
-    Page<SaleAnnouncement> getSaleAnnouncements(int pageNumber);
+    Page<SaleAnnouncement> getSaleAnnouncements(int pageNumber, String sort);
 
     Integer getNumberOfPages();
 

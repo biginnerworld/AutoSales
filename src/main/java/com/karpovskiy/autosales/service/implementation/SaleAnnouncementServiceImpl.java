@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 @Service
 @AllArgsConstructor
@@ -23,7 +24,7 @@ public class SaleAnnouncementServiceImpl implements SaleAnnouncementService {
 
     @Override
     public List<SaleAnnouncement> getAllAnnouncements() {
-        return saleAnnouncementRepository.findAll();
+        return saleAnnouncementRepository.findAllByDeletedIsFalse();
     }
 
     @Override
@@ -61,12 +62,26 @@ public class SaleAnnouncementServiceImpl implements SaleAnnouncementService {
     }
 
     @Override
-    public Page<SaleAnnouncement> getSaleAnnouncements(int pageNumber) {
-
-       return saleAnnouncementRepository.findAllByDeletedIsFalse(
-                PageRequest.of(pageNumber, 10, Sort.by(Sort.Direction.DESC, "publishDate"))
-        );
-
+    public Page<SaleAnnouncement> getSaleAnnouncements(int pageNumber, String sort) {
+        switch (sort){
+            case "old": return saleAnnouncementRepository.findAllByDeletedIsFalse(
+                    PageRequest.of(pageNumber, 10, Sort.by(Sort.Direction.ASC, "publishDate"))
+            );
+            case "brand":
+                Sort.Order order = new Sort.Order(Sort.Direction.ASC, "brand").ignoreCase();
+                return saleAnnouncementRepository.findAllByDeletedIsFalse(
+                    PageRequest.of(pageNumber, 10, Sort.by(order))
+            );
+            case "ascPrice": return saleAnnouncementRepository.findAllByDeletedIsFalse(
+                    PageRequest.of(pageNumber, 10, Sort.by(Sort.Direction.ASC, "price"))
+            );
+            case "descPrice": return saleAnnouncementRepository.findAllByDeletedIsFalse(
+                    PageRequest.of(pageNumber, 10, Sort.by(Sort.Direction.DESC, "price"))
+            );
+            default: return saleAnnouncementRepository.findAllByDeletedIsFalse(
+                    PageRequest.of(pageNumber, 10, Sort.by(Sort.Direction.DESC, "publishDate"))
+            );
+        }
     }
 
     @Override

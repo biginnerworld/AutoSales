@@ -8,16 +8,37 @@
 <header style="padding: 15px; background-color: aquamarine">
     <span style="font-size: 30px; margin-left: 15%"><a style="color: black; text-decoration: none" th:href="@{/}">AutoSales</a></span>
     <span style="float: right; margin-top: 7px">
+        <!--<span style="margin-right: 10px"><a th:href="@{/users/login}">Log in</a></span>-->
+        <span><a th:href="@{/users/registration}">Register</a></span>
+    </span>
+    <span style="float: right; margin-top: 7px;">
         <span><a th:href="@{/announcements/newAnnouncement}">New Sale Announcement</a></span>
     </span>
 </header>
 
 <div style="width: 80%; background-color: bisque; margin: 0 auto;">
     <div style="width: 95%; margin: 15px auto;">
-        <div th:each="announcement : ${announcements}">
-            <a th:href="@{/announcements/{id}(id=${announcement.getId()})}"><div style="border-width: 2px; border-color: black; color: black">
+        <div>
+            <span>Found announcements: </span>
+            <span th:utext="${numberOfAnnouncements}"></span>
+        </div>
+        <div>
+            <span style="margin-right: 10%">Sort by: </span>
+            <span style="margin-right: 10%"><a th:href="@{/(sort=${'new'})}">new first</a></span>
+            <span style="margin-right: 10%"><a th:href="@{/(sort=${'old'})}">old first</a></span>
+            <span style="margin-right: 10%"><a th:href="@{/(sort=${'brand'})}">brand</a></span>
+            <span style="margin-right: 10%"><a th:href="@{/(sort=${'ascPrice'})}">ascending price</a></span>
+            <span style="margin-right: 10%"><a th:href="@{/(sort=${'descPrice'})}">descending price</a></span>
+        </div>
+        <div style="border-width: 2px; border-color: black; color: black" th:each="announcement : ${announcements}">
+            <a th:href="@{/announcements/{id}(id=${announcement.getId()})}">
                 <h4 th:utext="${announcement.getTitle()}">title</h4>
                 <p>
+                    <span>Brand:</span>
+                    <span th:utext="${announcement.getBrand()}">brand</span>
+                </p>
+                <p>
+                    <span>Price: </span>
                     <span th:utext="${announcement.getPrice()}">price</span><span>$</span>
                 </p>
                 <p>
@@ -25,7 +46,7 @@
                     <span th:utext="${announcement.getDescription()}"></span>
                 </p>
                 <p th:utext="${announcement.getAuthor().getUsername()}">author</p>
-            </div></a>
+            </a>
         </div>
         <div th:if="${numOfPages > 1}">
             <p>

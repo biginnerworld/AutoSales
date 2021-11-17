@@ -20,6 +20,11 @@
       </div>
 
       <div>
+        <p>Car brand</p>
+        <span><input type="text" th:field="${announcement.brand}"></span>
+      </div>
+
+      <div>
         <p>Description:</p>
         <span><input type="text" th:field="${announcement.description}"></span>
       </div>
@@ -27,6 +32,7 @@
       <div>
         <p>Price(in US dollars):</p>
         <span><input type="text" th:field="${announcement.price}"></span>
+        <span>$</span>
       </div>
       <br/>
       <input type="submit" value="Create!">

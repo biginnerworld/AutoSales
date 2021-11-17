@@ -17,8 +17,10 @@ public class SaleAnnouncementController {
     private final UserServiceImpl userService;
 
     @GetMapping
-    public String getMainPage(Model model, @RequestParam(name = "page", defaultValue = "1") int pageNumber){
-        model.addAttribute("announcements", saleAnnouncementService.getSaleAnnouncements(pageNumber-1));
+    public String getMainPage(Model model, @RequestParam(name = "page", defaultValue = "1") int pageNumber,
+                              @RequestParam(name = "sort", defaultValue = "new") String sort){
+        model.addAttribute("announcements", saleAnnouncementService.getSaleAnnouncements(pageNumber-1, sort));
+        model.addAttribute("numberOfAnnouncements", saleAnnouncementService.getAllAnnouncements().size());
         model.addAttribute("numOfPages", saleAnnouncementService.getNumberOfPages());
         model.addAttribute("pageNumber", pageNumber);
 

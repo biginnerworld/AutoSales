@@ -21,6 +21,9 @@ import java.util.Objects;
 @Table(name = "CarSaleAnnouncements")
 public class SaleAnnouncement {
 
+    @Column(name = "num_of_announcements")
+    private static int numOfAnnouncements;
+
     @Id
     @Column(name = "announcement_id")
     private String id;
@@ -37,6 +40,9 @@ public class SaleAnnouncement {
 
     @Column(name = "price")
     private BigDecimal price;
+
+    @Column(name = "brand")
+    private String brand;
 
     @Column(name = "deleted")
     private boolean deleted;
