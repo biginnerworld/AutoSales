@@ -6,6 +6,7 @@ import com.karpovskiy.autosales.repository.UserRepository;
 import com.karpovskiy.autosales.security.Role;
 import com.karpovskiy.autosales.service.UserService;
 import lombok.AllArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,6 +16,7 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public List<User> getAllUsers() {
@@ -26,6 +28,7 @@ public class UserServiceImpl implements UserService {
         user.setId(IDGenerator.generateID());
         user.setRole(Role.USER);
         user.setDeleted(false);
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
     }
 

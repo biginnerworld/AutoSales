@@ -2,13 +2,16 @@ package com.karpovskiy.autosales.config;
 
 import com.karpovskiy.autosales.service.implementation.UserDetailServiceImpl;
 import lombok.AllArgsConstructor;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
@@ -31,7 +34,7 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
                         .and()
                 .formLogin()
                         .loginPage("/users/login").permitAll()
-                        .loginProcessingUrl("/users/login")
+                        /*.loginProcessingUrl("/users/login")*/
                         .defaultSuccessUrl("/")
                         .and()
                 .logout()
@@ -44,8 +47,22 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailService)
-                .passwordEncoder(NoOpPasswordEncoder.getInstance());
+        auth.authenticationProvider(authenticationProvider());
     }
 
+
+
+    @Bean
+    public PasswordEncoder passwordEncoder(){
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        return passwordEncoder;
+    }
+
+    @Bean
+    public DaoAuthenticationProvider authenticationProvider(){
+        DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
+        authenticationProvider.setUserDetailsService(userDetailService);
+        authenticationProvider.setPasswordEncoder(passwordEncoder());
+        return authenticationProvider;
+    }
 }

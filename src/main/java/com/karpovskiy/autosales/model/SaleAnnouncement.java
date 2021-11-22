@@ -1,12 +1,13 @@
 package com.karpovskiy.autosales.model;
 
-import lombok.*;
-import org.hibernate.Hibernate;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.Objects;
 
 /**
  * This Entity represents Car Sale Announcement
@@ -50,17 +51,4 @@ public class SaleAnnouncement {
     @ManyToOne
     @JoinColumn(name = "author_id", referencedColumnName = "user_id")
     private User author;
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        SaleAnnouncement that = (SaleAnnouncement) o;
-        return id != null && Objects.equals(id, that.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return 0;
-    }
 }

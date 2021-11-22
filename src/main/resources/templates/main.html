@@ -7,12 +7,13 @@
 <body style="margin: 0px; background-color: burlywood">
 <header style="padding: 15px; background-color: aquamarine">
     <span style="font-size: 30px; margin-left: 15%"><a style="color: black; text-decoration: none" th:href="@{/}">AutoSales</a></span>
-    <span style="float: right; margin-top: 7px">
+    <span style="float: right; margin-top: 7px"  th:unless="${authorized == 'true'}">
         <span style="margin-right: 10px; margin-left: 10px"><a th:href="@{/users/login}">Log in</a></span>
         <span><a th:href="@{/users/registration}">Register</a></span>
     </span>
-    <span style="float: right; margin-top: 7px;">
-        <span><a th:href="@{/announcements/newAnnouncement}">New Sale Announcement</a></span>
+    <span style="float: right; margin-top: 7px;" th:if="${authorized == 'true'}">
+        <span style="margin-right: 10px"><a th:href="@{/announcements/newAnnouncement}">New Sale Announcement</a></span>
+        <span><a th:href="@{/logout}">Logout</a></span>
     </span>
 </header>
 

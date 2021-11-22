@@ -1,12 +1,16 @@
 package com.karpovskiy.autosales.model;
 
 import com.karpovskiy.autosales.security.Role;
-import lombok.*;
-import org.hibernate.Hibernate;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * This Entity represents User
@@ -26,15 +30,21 @@ public class User {
     private String id;
 
     @Column(name = "username")
+    @NotBlank(message = "Username should not be empty")
+    @Length(min = 2, max = 30, message = "Name should be between 2 and 30 characters")
     private String username;
 
     @Column(name = "password")
+    @NotBlank(message = "Password should not be empty")
+    @Length(min = 6, message = "Password should be longer than 6")
     private String password;
 
     @Column(name = "user_role")
     private Role role;
 
     @Column(name = "email")
+    @NotBlank(message = "E-mail should not be empty")
+    @Email(message = "Incorrect e-mail")
     private String email;
 
     @Column(name = "isDeleted")
@@ -43,17 +53,4 @@ public class User {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "author")
     @ToString.Exclude
     private List<SaleAnnouncement> announcements;
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        User user = (User) o;
-        return id != null && Objects.equals(id, user.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return 0;
-    }
 }
