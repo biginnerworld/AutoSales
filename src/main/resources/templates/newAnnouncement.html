@@ -20,22 +20,26 @@
       <div>
         <p>Create title</p>
         <span><input type="text" th:field="${announcement.title}"></span>
+        <span style="color: red" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">Title error</span>
       </div>
 
       <div>
         <p>Car brand</p>
         <span><input type="text" th:field="${announcement.brand}"></span>
+        <span style="color: red" th:if="${#fields.hasErrors('brand')}" th:errors="*{brand}">Brand error</span>
       </div>
 
       <div>
         <p>Description:</p>
         <span><input type="text" th:field="${announcement.description}"></span>
+        <span style="color: red" th:if="${#fields.hasErrors('description')}" th:errors="*{description}">Description error</span>
       </div>
 
       <div>
         <p>Price(in US dollars):</p>
         <span><input type="text" th:field="${announcement.price}"></span>
         <span>$</span>
+        <span style="color: red" th:if="${#fields.hasErrors('price')}" th:errors="*{price}">Price error</span>
       </div>
       <br/>
       <input type="submit" value="Create!">
