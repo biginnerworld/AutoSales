@@ -8,10 +8,12 @@ import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.validator.constraints.Length;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-import java.util.List;
 
 /**
  * This Entity represents User
@@ -56,9 +58,4 @@ public class User {
 
     @Column(name = "isDeleted")
     private boolean isDeleted;
-
-    @Schema(description = "User's announcements")
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "author")
-    @ToString.Exclude
-    private List<SaleAnnouncement> announcements;
 }

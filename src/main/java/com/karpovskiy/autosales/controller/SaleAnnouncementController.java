@@ -39,6 +39,7 @@ public class SaleAnnouncementController {
         model.addAttribute("numberOfAnnouncements", saleAnnouncementService.getAllAnnouncements().size());
         model.addAttribute("numOfPages", saleAnnouncementService.getNumberOfPages());
         model.addAttribute("pageNumber", pageNumber);
+        model.addAttribute("sort", sort);
         if (currentUser != null){
             model.addAttribute("authorized", "true");
         }
@@ -58,7 +59,7 @@ public class SaleAnnouncementController {
 
         if (currentUser != null){
             model.addAttribute("authorized", "true");
-            if (saleAnnouncement.getAuthor().getUsername().equals(currentUser.getUsername()) ||
+            if (saleAnnouncement.getAuthor().equals(currentUser.getUsername()) ||
                     userService.getUserByUsername(currentUser.getUsername()).getRole() == Role.ADMIN){
                 model.addAttribute("changeable", "true");
             }

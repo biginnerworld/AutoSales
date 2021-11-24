@@ -30,7 +30,7 @@
                 <span>Description: </span>
                 <span th:utext="${announcement.getDescription()}"></span>
             </p>
-            <p th:utext="${announcement.getAuthor().getUsername()}">author</p>
+            <p th:utext="${announcement.getAuthor()}">author</p>
         </div>
         <div th:if="${changeable == 'true'}">
             <p>

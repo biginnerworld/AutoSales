@@ -66,7 +66,8 @@ public class SaleAnnouncement {
     private boolean deleted;
 
     @Schema(description = "Author of the Announcement")
-    @ManyToOne
-    @JoinColumn(name = "author_id", referencedColumnName = "user_id")
-    private User author;
+    /*@ManyToOne
+    @JoinColumn(name = "author_id", referencedColumnName = "user_id")*/
+    @Column(name = "author_name")
+    private String author;
 }
